@@ -1,0 +1,32 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+PROJECT(yc_common)
+
+SET(lib_name yc_file)
+
+
+SET(CMAKE_CXX_COMPILER "g++")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -fPIC")
+SET(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x")
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+
+IF (CMAKE_BUILD_TYPE MATCHES Debug) 
+    message("debug mode")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -g")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g")
+ELSE()
+    message("release mode")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -fno-strict-aliasing -DNDEBUG -g")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -fno-strict-aliasing -DNDEBUG -g")
+ENDIF()
+INCLUDE_DIRECTORIES(
+    ${CMAKE_SOURCE_DIR}/include/
+)
+
+
+FILE(GLOB_RECURSE src_files ${CMAKE_SOURCE_DIR}/include/*.h ${CMAKE_SOURCE_DIR}/src/*cpp)
+
+
+ADD_LIBRARY(${lib_name} STATIC ${src_files})
+
