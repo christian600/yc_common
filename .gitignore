@@ -1,0 +1,9 @@
+build/
+bin/
+*output*/
+.vscode/
+third_party/
+not/
+libs/
+.idea
+*tar.gz
